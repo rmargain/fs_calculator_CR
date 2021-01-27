@@ -7,8 +7,9 @@ import Costs from '../../components/Costs';
 import AverageUnitsOrder from '../../components/AverageUnitsOrder';
 import AvgUnitsMonth from '../../components/AverageUnitsMonth';
 import ShipmentsDist from '../../components/ShipmentsDist';
-import { Button } from '@material-ui/core';
+import { Button, Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
 import Iva from '../../components/IVA';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 
 export default function Form(props) {
@@ -32,16 +33,49 @@ export default function Form(props) {
 
     return (
         <div>
+        <h1>Paso 1: Ingresa los datos de tu tienda y producto</h1>
+        <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography >Datos de la Tienda</Typography>
+        </AccordionSummary>
+        <AccordionDetails className="input-container" >
             <StoreSubscription setSubscription = {setSubscription} subscription = {subscription}/>
             <FiscalStatus setFiscalStatus = {setFiscalStatus} fiscalStatus = {fiscalStatus}/>
             <RfcStatus setRfcStatus = {setRfcStatus} rfcStatus={rfcStatus}/>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Datos del Producto</Typography>
+        </AccordionSummary>
+        <AccordionDetails className="input-container" >
             <Iva setIva = {setIva} iva = {iva}/>
             <CurrProductPrice setCurrentProductPrice = {setCurrentProductPrice} currentProductPrice = {currentProductPrice}/>
             <Costs setCosts = {setCosts} costs = {costs}/>
-            <AverageUnitsOrder setAverageUnitsOrder = {setAverageUnitsOrder} averageUnitsOrder={averageUnitsOrder} label="Unidades promedio por Orden (Actual)"/>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3a-content"
+          id="panel3a-header"
+        >
+          <Typography>Datos de Órdenes</Typography>
+        </AccordionSummary>
+        <AccordionDetails className="input-container" >
+          <AverageUnitsOrder setAverageUnitsOrder = {setAverageUnitsOrder} averageUnitsOrder={averageUnitsOrder} label="Unidades promedio por Orden (Actual)"/>
             <AvgUnitsMonth setAverageUnitsMonth = {setAverageUnitsMonth} averageUnitsMonth = {averageUnitsMonth} label="Unidades promedio vendidas al mes"/>
             <ShipmentsDist setMoto = {setMoto} moto = {moto} setAuto = {setAuto} auto = {auto} setNational= {setNational} national = {national}/>
-            <Button onClick={handleSubmit}>Dale</Button>
+        </AccordionDetails>
+      </Accordion>
         </div>
     )
 }

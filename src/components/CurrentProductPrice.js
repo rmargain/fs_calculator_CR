@@ -1,4 +1,4 @@
-import {OutlinedInput, InputAdornment, FormLabel, IconButton} from '@material-ui/core'
+import {OutlinedInput, InputAdornment, FormLabel, IconButton, Card} from '@material-ui/core'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
@@ -18,10 +18,9 @@ export default function CurrProductPrice({setCurrentProductPrice, currentProduct
     }
     return (
         <div>
-            <FormLabel component="legend">Precio Actual del Producto</FormLabel>
-            <IconButton onClick={decrement}>
-                <RemoveCircleIcon/>
-            </IconButton>
+         <Card variant="outlined" style={{padding:"5px", margin: "10px"}}>
+            <FormLabel component="legend">Precio actual del producto</FormLabel>
+            <div style={{display:"flex"}}>
             <OutlinedInput
             id="outlined-adornment"
             value={currentProductPrice}
@@ -30,9 +29,16 @@ export default function CurrProductPrice({setCurrentProductPrice, currentProduct
             type="number"
             className="numberInput"
           /> 
-          <IconButton onClick={increment}>
+          <div style={{display: "flex", flexDirection: "column", margin: 0, padding: 0, size: "15%"}}>
+          <IconButton onClick={increment} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
                 <AddCircleIcon/>
+            </IconButton>
+            <IconButton onClick={decrement} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
+                <RemoveCircleIcon/>
             </IconButton>      
+          </div>
+            </div>
+            </Card>
         </div>
     )
 }

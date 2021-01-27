@@ -1,24 +1,17 @@
 import React, {useState} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import { makeStyles } from '@material-ui/core/styles';
+import {Card, FormLabel} from '@material-ui/core'
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 250,
-  },
-  margin: {
-    height: theme.spacing(3),
-  },
-}));
+
 
 function valuetext(value) {
   return value;
 }
 
 export default function ShipmentDist({moto, auto, national, setMoto, setAuto, setNational}) {
-  const classes = useStyles();
+  
   const [value, setValue] = useState([33, 66]);
 
   
@@ -31,10 +24,9 @@ export default function ShipmentDist({moto, auto, national, setMoto, setAuto, se
   };
 
   return (
-    <div className={classes.root}>
-      <Typography id="range-slider-demo" gutterBottom>
-        Distribución Tipos de Envío
-      </Typography>
+    <div >
+    <Card variant="outlined" style={{padding:"5px", margin: "10px"}}> 
+      <FormLabel component="legend">Distribución de tipos de envío</FormLabel>
       <div style={{display: 'flex', justifyContent:'space-between'}}>
       <Typography variant="caption">Ex. Moto</Typography>
       <br/>
@@ -60,6 +52,7 @@ export default function ShipmentDist({moto, auto, national, setMoto, setAuto, se
       <br/>
       <Typography variant="caption">{national}%</Typography>
       </div>
+    </Card>
     </div>
   );
 }

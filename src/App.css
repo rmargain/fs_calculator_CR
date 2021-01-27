@@ -3,35 +3,36 @@
 }
 .content{
  display: flex;
- flex-direction: row;
+ flex-direction: column;
  margin: 20px;
  padding: 20px;
 }
 .navbar{
   background-color: black;
-  border: solid red 2px
 }
 .toolbar{
 width: auto;
 /* display:flex;
 flex-direction: row;
 justify-content:flex-start; */
-border: solid red 2px
 }
 .logoContainer:{
-  border: solid red 2px
 
 }
 .logo{
   width: 50%;
-  border: solid red 2px
   
 }
 .title{
-    border: solid red 2px;
 }
 .radio{
   background-color: black;
+}
+.input-container{
+  display: flex;
+  justify-content: space-between;
+  background-color: grey;
+
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -55,5 +56,11 @@ input[type=number] {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 800px) {
+  .input-container{
+    flex-direction: column;
   }
 }
