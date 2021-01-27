@@ -31,7 +31,7 @@ justify-content:flex-start; */
 .input-container{
   display: flex;
   justify-content: space-between;
-  background-color: grey;
+  background-color: #EBEBEB;
 
 }
 /* Chrome, Safari, Edge, Opera */
