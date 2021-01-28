@@ -510,7 +510,7 @@ export default function CurrentStoreStatus({
         >
           <h3>Incremento en Precio: 0%</h3>
           <h3>
-            Precio del Producto: {Math.round(currentProductPrice * 100) / 100}
+            Precio del Producto: ${Math.round(currentProductPrice * 100) / 100}
           </h3>
         </Paper>
       </Card>
@@ -937,7 +937,7 @@ export default function CurrentStoreStatus({
               <TableRow>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -947,7 +947,7 @@ export default function CurrentStoreStatus({
                 ></TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -959,7 +959,7 @@ export default function CurrentStoreStatus({
                 </TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -972,7 +972,7 @@ export default function CurrentStoreStatus({
                 </TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -985,7 +985,7 @@ export default function CurrentStoreStatus({
                 </TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -1008,7 +1008,7 @@ export default function CurrentStoreStatus({
                     paddingBottom: ".1vw",
                   }}
                   className="table-cell-text"
-                  align = "center"
+                  align="center"
                 >
                   <IconButton
                     aria-label="expand row"
@@ -1413,7 +1413,7 @@ export default function CurrentStoreStatus({
               <TableRow>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -1423,7 +1423,7 @@ export default function CurrentStoreStatus({
                 ></TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -1435,7 +1435,7 @@ export default function CurrentStoreStatus({
                 </TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -1448,7 +1448,7 @@ export default function CurrentStoreStatus({
                 </TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
@@ -1461,7 +1461,7 @@ export default function CurrentStoreStatus({
                 </TableCell>
                 <TableCell
                   style={{
-                    backgroundColor: "#EBEBEB",
+                    backgroundColor: "#BEBEBE",
                     paddingRight: ".4vw",
                     paddingLeft: ".5vw",
                     paddingTop: ".1vw",
