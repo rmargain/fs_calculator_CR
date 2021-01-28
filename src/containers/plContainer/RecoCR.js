@@ -79,60 +79,9 @@ export default function RecoCR({
     let price = 10
     while (price < 1.3*currentProductPrice){
     // constantes envio gratis    
-    const _porcentajeEnvioGratis = price >= min ? 1 : 0.7
-    const _unidadesEnvioGratis = averageUnitsMonth * _porcentajeEnvioGratis
-    const _unidadesMinimasRequeridas = price >= min ? 1 : Math.ceil(min/price)
-    const _ordenesEnvioGratis = Math.floor(_unidadesEnvioGratis/_unidadesMinimasRequeridas)
-    const _unidadesEnvioGratisPorOrden = _unidadesEnvioGratis/_ordenesEnvioGratis
-    const _ventaEnvioGratis = _unidadesEnvioGratisPorOrden * price
-    const _envioPagadoPorCliente = 0
-    const _ventaTotalEnvioGratis = _ventaEnvioGratis + _envioPagadoPorCliente
-    const _comisionCREnvioGratis = subscription === "Standard" ? _ventaTotalEnvioGratis * 0.1 : _ventaTotalEnvioGratis * 0.05
-    const _pagosEnvioGratis = 0.035 * _ventaTotalEnvioGratis
-    const _costoEnvioGratis = envio
-    const _ivaEnvioGratis = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? 0 : ivaAplicable(iva, fiscalStatus, rfcStatus)*_ventaTotalEnvioGratis/1.16
-    const _isrEnvioGratis = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? isrAplicable(fiscalStatus, rfcStatus)*_ventaTotalEnvioGratis : isrAplicable(fiscalStatus, rfcStatus)*_ventaTotalEnvioGratis/1.16
-    const _percepcionEnvioGratis = _ventaTotalEnvioGratis - _comisionCREnvioGratis - _pagosEnvioGratis - _ivaEnvioGratis - _isrEnvioGratis - _costoEnvioGratis
-    const _costoTotalEnvioGratis = costs * _unidadesEnvioGratisPorOrden
-    const _gananciaNetaEnvioGratis = _percepcionEnvioGratis - _costoTotalEnvioGratis
-    const _gananciaNetaPorUnidadEnvioGratis = _gananciaNetaEnvioGratis/_unidadesEnvioGratisPorOrden
-
-    // constantes envio pagado
-    
-    const _porcentajeEnvioPagado = price >= min ? 0 : 0.3
-    const _unidadesEnvioPagado = averageUnitsMonth * _porcentajeEnvioPagado
-    // const _unidadesEnvioPagado = price >= min ? 1 : Math.ceil(min/price)
-    const _ordenesEnvioPagado = Math.floor(_unidadesEnvioPagado/averageUnitsOrder)
-    const _unidadesEnvioPagadoPorOrden = _unidadesEnvioPagado/_ordenesEnvioPagado
-    const _ventaEnvioPagado = _unidadesEnvioPagadoPorOrden * price
-    const _envioPagadoPorCliente2 = _unidadesEnvioPagado === 0 ? 0 : envio
-    const _ventaTotalEnvioPagado = _ventaEnvioPagado + _envioPagadoPorCliente2
-    const _comisionCREnvioPagado = subscription === "Standard" ? _ventaTotalEnvioPagado * 0.1 : _ventaTotalEnvioPagado * 0.05
-    const _pagosEnvioPagado = 0.035 * _ventaTotalEnvioPagado
-    const _costoEnvioGratis2 = 0
-    const _ivaEnvioPagado = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? 0 : ivaAplicable(iva, fiscalStatus, rfcStatus)*_ventaEnvioPagado/1.16
-    const _isrEnvioPagado = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? isrAplicable(fiscalStatus, rfcStatus)*_ventaEnvioPagado : isrAplicable(fiscalStatus, rfcStatus)*_ventaEnvioPagado/1.16
-    const _percepcionEnvioPagado = _ventaEnvioPagado - _comisionCREnvioPagado - _pagosEnvioPagado - _ivaEnvioPagado - _isrEnvioPagado
-    const _costoTotalEnvioPagado = costs * _unidadesEnvioPagadoPorOrden
-    const _gananciaNetaEnvioPagado = _percepcionEnvioPagado - _costoTotalEnvioPagado
-    const _gananciaNetaPorUnidadEnvioPagado = _gananciaNetaEnvioPagado/_unidadesEnvioPagadoPorOrden
-    const _gananciaNetaPromedioPonderadoPorUnidad = price >= min ? _gananciaNetaPorUnidadEnvioGratis : _gananciaNetaPorUnidadEnvioGratis * 0.7 + _gananciaNetaPorUnidadEnvioPagado * 0.3
-
-    let _diff = Math.abs(gananciaNetaPorUnidadActual - _gananciaNetaPromedioPonderadoPorUnidad)
-    
-    if (_diff < .01){
-        break;
-    }
-        price += .01
-    }
-    return price
-    }
-
-    // vista optimizacion
-    const price = currentProductPrice + (optimizedPrice(gananciaNetaPorUnidadActual, min, averageUnitsMonth, averageUnitsOrder)-currentProductPrice) *0.55
-    const _porcentajeEnvioGratis = price >= min ? 1 : 0.7
-    const _unidadesEnvioGratis = averageUnitsMonth * _porcentajeEnvioGratis
-    const _unidadesMinimasRequeridas = price >= min ? 1 : Math.ceil(min/price)
+    const _porcentajeEnvioGratis = price >= min ? 1 : price * averageUnitsOrder >= min ? 1 : 0.7
+    const _unidadesEnvioGratis = Math.round(averageUnitsMonth * _porcentajeEnvioGratis *100)/100
+    const _unidadesMinimasRequeridas = Math.max(price >= min ? 1 : Math.ceil(min/price), averageUnitsOrder)
     const _ordenesEnvioGratis = Math.floor(_unidadesEnvioGratis/_unidadesMinimasRequeridas)
     const _unidadesEnvioGratisPorOrden = _unidadesEnvioGratis/_ordenesEnvioGratis
     const _ventaEnvioGratis = _unidadesEnvioGratisPorOrden * price
@@ -150,13 +99,13 @@ export default function RecoCR({
     // const _diff = Math.abs(gananciaNetaPorUnidadActual - _gananciaNetaPorUnidadEnvioGratis)
 
 
-    const _porcentajeEnvioPagado = price >= min ? 0 : 0.3
+    const _porcentajeEnvioPagado = price >= min ? 0 : price * averageUnitsOrder >= min ? 0 : 0.3
     const _unidadesEnvioPagado = averageUnitsMonth * _porcentajeEnvioPagado
     // const _unidadesEnvioPagado = price >= min ? 1 : Math.ceil(min/price)
-    const _ordenesEnvioPagado = Math.floor(_unidadesEnvioPagado/averageUnitsOrder)
-    const _unidadesEnvioPagadoPorOrden = _unidadesEnvioPagado/_ordenesEnvioPagado
+    const _ordenesEnvioPagado = _unidadesEnvioPagado === 0 ? 0 : Math.floor(_unidadesEnvioPagado/averageUnitsOrder)
+    const _unidadesEnvioPagadoPorOrden = _ordenesEnvioPagado === 0 ? 0 : _unidadesEnvioPagado/_ordenesEnvioPagado
     const _ventaEnvioPagado = _unidadesEnvioPagadoPorOrden * price
-    const _envioPagadoPorCliente2 = envio
+    const _envioPagadoPorCliente2 = _unidadesEnvioPagado === 0 ? 0 : envio
     const _ventaTotalEnvioPagado = _ventaEnvioPagado + _envioPagadoPorCliente2
     const _comisionCREnvioPagado = subscription === "Standard" ? _ventaTotalEnvioPagado * 0.1 : _ventaTotalEnvioPagado * 0.05
     const _pagosEnvioPagado = 0.035 * _ventaTotalEnvioPagado
@@ -166,8 +115,60 @@ export default function RecoCR({
     const _percepcionEnvioPagado = _ventaEnvioPagado - _comisionCREnvioPagado - _pagosEnvioPagado - _ivaEnvioPagado - _isrEnvioPagado
     const _costoTotalEnvioPagado = costs * _unidadesEnvioPagadoPorOrden
     const _gananciaNetaEnvioPagado = _percepcionEnvioPagado - _costoTotalEnvioPagado
-    const _gananciaNetaPorUnidadEnvioPagado = _gananciaNetaEnvioPagado/_unidadesEnvioPagadoPorOrden
-    const _gananciaNetaPromedioPonderadoPorUnidad = price >= min ? _gananciaNetaPorUnidadEnvioGratis : _gananciaNetaPorUnidadEnvioGratis * 0.7 + _gananciaNetaPorUnidadEnvioPagado * 0.3
+    const _gananciaNetaPorUnidadEnvioPagado = _unidadesEnvioPagadoPorOrden === 0 ? 0 : _gananciaNetaEnvioPagado/_unidadesEnvioPagadoPorOrden
+    const _gananciaNetaPromedioPonderadoPorUnidad = price >= min ? _gananciaNetaPorUnidadEnvioGratis : (price * averageUnitsOrder) >= min ? _gananciaNetaPorUnidadEnvioGratis : _gananciaNetaPorUnidadEnvioGratis * 0.7 + _gananciaNetaPorUnidadEnvioPagado * 0.3
+
+    let _diff = Math.abs(gananciaNetaPorUnidadActual - _gananciaNetaPromedioPonderadoPorUnidad)
+    
+    if (_diff < .01){
+        break;
+    }
+        price += .01
+    }
+    return price
+    }
+
+    // vista optimizacion
+    const price = currentProductPrice + (optimizedPrice(gananciaNetaPorUnidadActual, min, averageUnitsMonth, averageUnitsOrder)-currentProductPrice) * 0.55
+    const _porcentajeEnvioGratis = price >= min ? 1 : price * averageUnitsOrder >= min ? 1 : 0.7
+    console.log( price, averageUnitsOrder)
+    const _unidadesEnvioGratis = Math.round(averageUnitsMonth * _porcentajeEnvioGratis *100)/100
+    const _unidadesMinimasRequeridas = Math.max(price >= min ? 1 : Math.ceil(min/price), averageUnitsOrder)
+    const _ordenesEnvioGratis = Math.floor(_unidadesEnvioGratis/_unidadesMinimasRequeridas)
+    const _unidadesEnvioGratisPorOrden = _unidadesEnvioGratis/_ordenesEnvioGratis
+    const _ventaEnvioGratis = _unidadesEnvioGratisPorOrden * price
+    const _envioPagadoPorCliente = 0
+    const _ventaTotalEnvioGratis = _ventaEnvioGratis + _envioPagadoPorCliente
+    const _comisionCREnvioGratis = subscription === "Standard" ? _ventaTotalEnvioGratis * 0.1 : _ventaTotalEnvioGratis * 0.05
+    const _pagosEnvioGratis = 0.035 * _ventaTotalEnvioGratis
+    const _costoEnvioGratis = envio
+    const _ivaEnvioGratis = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? 0 : ivaAplicable(iva, fiscalStatus, rfcStatus)*_ventaTotalEnvioGratis/1.16
+    const _isrEnvioGratis = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? isrAplicable(fiscalStatus, rfcStatus)*_ventaTotalEnvioGratis : isrAplicable(fiscalStatus, rfcStatus)*_ventaTotalEnvioGratis/1.16
+    const _percepcionEnvioGratis = _ventaTotalEnvioGratis - _comisionCREnvioGratis - _pagosEnvioGratis - _ivaEnvioGratis - _isrEnvioGratis - _costoEnvioGratis
+    const _costoTotalEnvioGratis = costs * _unidadesEnvioGratisPorOrden
+    const _gananciaNetaEnvioGratis = _percepcionEnvioGratis - _costoTotalEnvioGratis
+    const _gananciaNetaPorUnidadEnvioGratis = _gananciaNetaEnvioGratis/_unidadesEnvioGratisPorOrden
+    // const _diff = Math.abs(gananciaNetaPorUnidadActual - _gananciaNetaPorUnidadEnvioGratis)
+
+
+    const _porcentajeEnvioPagado = price >= min ? 0 : price * averageUnitsOrder >= min ? 0 : 0.3
+    const _unidadesEnvioPagado = averageUnitsMonth * _porcentajeEnvioPagado
+    // const _unidadesEnvioPagado = price >= min ? 1 : Math.ceil(min/price)
+    const _ordenesEnvioPagado = _unidadesEnvioPagado === 0 ? 0 : Math.floor(_unidadesEnvioPagado/averageUnitsOrder)
+    const _unidadesEnvioPagadoPorOrden = _ordenesEnvioPagado === 0 ? 0 : _unidadesEnvioPagado/_ordenesEnvioPagado
+    const _ventaEnvioPagado = _unidadesEnvioPagadoPorOrden * price
+    const _envioPagadoPorCliente2 = _unidadesEnvioPagado === 0 ? 0 : envio
+    const _ventaTotalEnvioPagado = _ventaEnvioPagado + _envioPagadoPorCliente2
+    const _comisionCREnvioPagado = subscription === "Standard" ? _ventaTotalEnvioPagado * 0.1 : _ventaTotalEnvioPagado * 0.05
+    const _pagosEnvioPagado = 0.035 * _ventaTotalEnvioPagado
+    const _costoEnvioGratis2 = 0
+    const _ivaEnvioPagado = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? 0 : ivaAplicable(iva, fiscalStatus, rfcStatus)*_ventaEnvioPagado/1.16
+    const _isrEnvioPagado = ivaAplicable(iva, fiscalStatus, rfcStatus) === 0 ? isrAplicable(fiscalStatus, rfcStatus)*_ventaEnvioPagado : isrAplicable(fiscalStatus, rfcStatus)*_ventaEnvioPagado/1.16
+    const _percepcionEnvioPagado = _ventaEnvioPagado - _comisionCREnvioPagado - _pagosEnvioPagado - _ivaEnvioPagado - _isrEnvioPagado
+    const _costoTotalEnvioPagado = costs * _unidadesEnvioPagadoPorOrden
+    const _gananciaNetaEnvioPagado = _percepcionEnvioPagado - _costoTotalEnvioPagado
+    const _gananciaNetaPorUnidadEnvioPagado = _unidadesEnvioPagadoPorOrden === 0 ? 0 : _gananciaNetaEnvioPagado/_unidadesEnvioPagadoPorOrden
+    const _gananciaNetaPromedioPonderadoPorUnidad = price >= min ? _gananciaNetaPorUnidadEnvioGratis : (price * averageUnitsOrder) >= min ? _gananciaNetaPorUnidadEnvioGratis : _gananciaNetaPorUnidadEnvioGratis * 0.7 + _gananciaNetaPorUnidadEnvioPagado * 0.3
 
     // table rows
     function createData(name, actual, envioGratis, envioPagado) {
@@ -209,8 +210,8 @@ export default function RecoCR({
           <TableRow>
             <TableCell style={{backgroundColor: 'black', color: 'white', fontWeight: 'bold', fontSize: '20px', paddingRight: 4, paddingLeft: 5}}>Concepto</TableCell>
             <TableCell align="right" style={{backgroundColor: '#BEBEBE', fontWeight: 'bold', fontSize: '20px', paddingRight: 4, paddingLeft: 5}}>Orden Actual</TableCell>
-            <TableCell align="right" style={{backgroundColor: '#E63976', fontWeight: 'bold', fontSize: '20px', color: 'white', paddingRight: 4, paddingLeft: 5}}>Orden Envío Gratis ({(porcentajeEnvioGratis*100).toFixed(0)}%)</TableCell>
-            <TableCell align="right" style={{backgroundColor: '#E63976', fontWeight: 'bold', fontSize: '20px', color: 'white', paddingRight: 4, paddingLeft: 5}}>Orden Envío Pagado ({((1-porcentajeEnvioGratis)*100).toFixed(0)}%)</TableCell>
+            <TableCell align="right" style={{backgroundColor: '#E63976', fontWeight: 'bold', fontSize: '20px', color: 'white', paddingRight: 4, paddingLeft: 5}}>Orden Envío Gratis ({(_porcentajeEnvioGratis*100).toFixed(0)}%)</TableCell>
+            <TableCell align="right" style={{backgroundColor: '#E63976', fontWeight: 'bold', fontSize: '20px', color: 'white', paddingRight: 4, paddingLeft: 5}}>Orden Envío Pagado ({((1-_porcentajeEnvioGratis)*100).toFixed(0)}%)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

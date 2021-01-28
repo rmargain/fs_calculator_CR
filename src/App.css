@@ -4,8 +4,7 @@
 .content{
  display: flex;
  flex-direction: column;
- margin: 20px;
- padding: 20px;
+ margin: 0.5vw;
 }
 .navbar{
   background-color: black;
@@ -34,21 +33,21 @@ justify-content:flex-start; */
   background-color: #EBEBEB;
 
 }
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
 
 .slider{
   color: #E63976;
 }
+.table-text{
+  font-size: 20px;
+}
+.table-cell-text{
+  font-size: 16px;
+  font-weight: 'bold'
+}
+
+
+
+
 
 @keyframes App-logo-spin {
   from {
@@ -62,5 +61,11 @@ input[type=number] {
 @media (max-width: 800px) {
   .input-container{
     flex-direction: column;
+  }
+  .table-text{
+    font-size: .5em;
+  }
+  .table-cell-text{
+    font-size: .4em;
   }
 }
