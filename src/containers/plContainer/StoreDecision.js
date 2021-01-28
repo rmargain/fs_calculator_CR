@@ -267,6 +267,7 @@ export default function StoreDecision({
                 valueLabelDisplay="on"
                 onChange={handleChange}
                 style={{ width: "90%", margin: "15px" }}
+                className='slider'
               />
             </Card>
             <Card variant="outlined">
