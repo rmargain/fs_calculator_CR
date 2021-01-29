@@ -2,46 +2,70 @@ import {OutlinedInput, InputAdornment, FormLabel, IconButton, Card} from '@mater
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-export default function AverageUnitsOrder({label, averageUnitsOrder, setAverageUnitsOrder}) {
+export default function AverageUnitsOrder({label, averageUnitsOrder, setAverageUnitsOrder, setAverageUnitsMonth, averageUnitsMonth}) {
 
     function handleChange({target: {value}}) {
         let valueToSet = parseFloat(value)
-        setAverageUnitsOrder(valueToSet)
+        if(valueToSet > 1){
+            setAverageUnitsOrder(valueToSet)
+        }
+        if(valueToSet >= averageUnitsMonth){
+            setAverageUnitsMonth(valueToSet)
+        }
+        console.log(valueToSet, averageUnitsMonth)
     }
 
     function decrement(){
+        if(averageUnitsOrder > 1){
         setAverageUnitsOrder(averageUnitsOrder-1)
+        }
     }
     function increment(){
         setAverageUnitsOrder(averageUnitsOrder+1)
+        if(averageUnitsOrder >= averageUnitsMonth){
+            setAverageUnitsMonth(averageUnitsOrder + 1);
+        }
     }
 
     return (
-        <div>
-            <Card variant="outlined" style={{padding:"5px", margin: "10px"}}>
-
-            <FormLabel component="legend">{label}</FormLabel>
-            <div style={{display: "flex"}}>
-
+      <div>
+        <Card variant="outlined" style={{ padding: "5px", margin: "10px" }}>
+          <FormLabel component="legend">{label}</FormLabel>
+          <div style={{ display: "flex" }}>
             <OutlinedInput
-            id="outlined-adornment"
-            value={averageUnitsOrder}
-            onChange={handleChange}
-            startAdornment={<InputAdornment position="start">U</InputAdornment>}
-            type="number"
-            className="numberInput"
-          /> 
-          <div style={{display:"flex", flexDirection:"column"}}>
-
-          <IconButton onClick={increment} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
-                <AddCircleIcon/>
-            </IconButton> 
-            <IconButton onClick={decrement} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
-                <RemoveCircleIcon/>
-            </IconButton> 
-          </div>
+              id="outlined-adornment"
+              value={averageUnitsOrder}
+              onChange={handleChange}
+              startAdornment={
+                <InputAdornment position="start">U</InputAdornment>
+              }
+              type="number"
+              className="numberInput"
+            />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <IconButton
+                onMouseDown={increment}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  padding: "5px 0 5px 10px",
+                }}
+              >
+                <AddCircleIcon />
+              </IconButton>
+              <IconButton
+                onMouseDown={decrement}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  padding: "5px 0 5px 10px",
+                }}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
             </div>
-            </Card>    
-        </div>
-    )
+          </div>
+        </Card>
+      </div>
+    );
 }

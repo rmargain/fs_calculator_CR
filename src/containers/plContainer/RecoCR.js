@@ -293,7 +293,6 @@ export default function RecoCR({
       0.55;
   const _porcentajeEnvioGratis =
     price >= min ? 1 : price * averageUnitsOrder >= min ? 1 : 0.7;
-  console.log(price, averageUnitsOrder);
   const _unidadesEnvioGratis =
     Math.round(averageUnitsMonth * _porcentajeEnvioGratis * 100) / 100;
   const _unidadesMinimasRequeridas = Math.max(

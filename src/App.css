@@ -8,6 +8,20 @@
 }
 .navbar{
   background-color: black;
+  
+  width: 100%
+}
+.toolbar{
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+
+}
+.navbar-item{
+  align-items: center;
+  align-content: center;
+ 
 }
 .toolbar{
 width: auto;
@@ -15,14 +29,23 @@ width: auto;
 flex-direction: row;
 justify-content:flex-start; */
 }
-.logoContainer:{
-
+.logoContainer{
 }
 .logo{
-  width: 50%;
+  height: 100%;
+  width: auto;
   
 }
+.inst{
+  text-decoration: none;
+  color: white;
+  text-align: right;
+}
+.inst-cont{
+ text-align: right;
+}
 .title{
+  text-align: center;
 }
 .radio{
   background-color: black;
@@ -74,4 +97,9 @@ justify-content:flex-start; */
   .data-point{
     font-size: 1em;
   }
+  .toolbar{
+    display: flex;
+    flex-direction: column;
+  }
+ 
 }

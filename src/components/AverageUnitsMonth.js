@@ -6,12 +6,16 @@ export default function AvgUnitsMonth({label, averageUnitsMonth, setAverageUnits
     
     function handleChange({target: {value}}) {
         let valueToSet = parseFloat(value)
-        setAverageUnitsMonth(valueToSet)
+        if(valueToSet >1){
+            setAverageUnitsMonth(valueToSet)
+        }
 
     }
 
     function decrement(){
+       if(averageUnitsMonth > 3){
         setAverageUnitsMonth(averageUnitsMonth -1)
+       }
     }
     function increment(){
         setAverageUnitsMonth(averageUnitsMonth +1)
@@ -31,6 +35,7 @@ export default function AvgUnitsMonth({label, averageUnitsMonth, setAverageUnits
             startAdornment={<InputAdornment position="start">U</InputAdornment>}
             type="number"
             className="numberInput"
+            min={3}
           /> 
           <div style={{display: "flex", flexDirection:"column"}}>
           <IconButton onClick={increment} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
