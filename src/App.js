@@ -88,7 +88,7 @@ const App = () => {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Escenario 2: Recomendacion CR</Typography>
+          <Typography>Escenario 2: Recomendación CR</Typography>
         </AccordionSummary>
         <AccordionDetails className="input-container" >
             <RecoCR

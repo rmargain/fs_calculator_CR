@@ -13,7 +13,8 @@ import {
   Collapse,
   IconButton,
   Typography,
-  Slider
+  Slider,
+  FormLabel
 } from "@material-ui/core";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -56,7 +57,6 @@ export default function StoreDecision({
     const unidadesEnvioGratis = Math.round(averageUnitsMonth * porcentajeEnvioGratis *100)/100
     const unidadesMinimasRequeridas = Math.max(currentProductPrice >= min ? 1 : Math.ceil(min/currentProductPrice), averageUnitsOrder)
     const ordenesEnvioGratis = Math.floor(unidadesEnvioGratis/unidadesMinimasRequeridas)
-    console.log(porcentajeEnvioGratis)
     const unidadesEnvioGratisPorOrden = unidadesEnvioGratis/ordenesEnvioGratis
     const ventaEnvioGratis = unidadesEnvioGratisPorOrden * currentProductPrice
     const envioPagadoPorCliente = 0
@@ -189,6 +189,15 @@ export default function StoreDecision({
     const _gananciaNetaPorUnidadEnvioPagado = _unidadesEnvioPagadoPorOrden === 0 ? 0 : _gananciaNetaEnvioPagado/_unidadesEnvioPagadoPorOrden
     const _gananciaNetaPromedioPonderadoPorUnidad = price >= min ? _gananciaNetaPorUnidadEnvioGratis : (price * averageUnitsOrder) >= min ? _gananciaNetaPorUnidadEnvioGratis : _gananciaNetaPorUnidadEnvioGratis * 0.7 + _gananciaNetaPorUnidadEnvioPagado * 0.3
 
+    const ventaMensualActual = averageUnitsMonth * currentProductPrice;
+    const utilidadMensualActual =
+      gananciaNetaPorUnidadActual * averageUnitsMonth;
+    const unidadesBreakEven =
+      utilidadMensualActual / _gananciaNetaPromedioPonderadoPorUnidad;
+    const ventaBreakEven = unidadesBreakEven * price;
+    const pcntIncrementoVentas = ventaBreakEven / ventaMensualActual - 1;
+    const pcntIncrementoUnidades = unidadesBreakEven / averageUnitsMonth - 1;
+
     // table rows
     function createData(name, actual, envioGratis, envioPagado) {
         return {name, actual, envioGratis, envioPagado}
@@ -241,6 +250,7 @@ export default function StoreDecision({
               display: "flex",
               flexDirection: "column",
               alignContent: "center",
+              width: '100%'
             }}
           >
             <Card
@@ -267,23 +277,119 @@ export default function StoreDecision({
                 valueLabelDisplay="on"
                 onChange={handleChange}
                 style={{ width: "90%", margin: "15px" }}
-                className='slider'
+                className="slider"
               />
             </Card>
-            <Card variant="outlined">
-              <Paper
-                elevation={3}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <h3>
-                  Incremento en Precio: {Math.round((price / currentProductPrice - 1) * 100)}%
-                </h3>
-                <h3>Precio del Producto: ${Math.round(price * 100) / 100}</h3>
-              </Paper>
+            <Card variant="outlined" className="input-container">
+              <Card variant="outlined">
+                <Paper
+                  elevation={3}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: ".5em",
+                    padding: ".5em",
+                  }}
+                >
+                  <FormLabel>Venta Mensual Actual</FormLabel>
+                  <Typography className="data-point">
+                    ${ventaMensualActual.toFixed(0)}
+                  </Typography>
+                </Paper>
+              </Card>
+              <Card variant="outlined">
+                <Paper
+                  elevation={3}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: ".5em",
+                    padding: ".5em",
+                  }}
+                >
+                  <FormLabel>Ganancia Mensual Actual</FormLabel>
+                  <Typography className="data-point">
+                    ${utilidadMensualActual.toFixed(0)}
+                  </Typography>
+                </Paper>
+              </Card>
+              <Card variant="outlined">
+                <Paper
+                  elevation={3}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: ".5em",
+                    padding: ".5em",
+                  }}
+                >
+                  <FormLabel component="legend">Incremento en Precio</FormLabel>
+                  <Typography className="data-point">
+                    {Math.round(
+                      (price / currentProductPrice - 1) * 100
+                    ).toFixed(0)}
+                    %
+                  </Typography>
+                </Paper>
+              </Card>
+
+              <Card variant="outlined">
+                <Paper
+                  elevation={3}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: ".5em",
+                    padding: ".5em",
+                  }}
+                >
+                  <FormLabel>Precio del Producto:</FormLabel>
+                  <Typography className="data-point">
+                    ${Math.round(price * 100) / 100}
+                  </Typography>
+                </Paper>
+              </Card>
+
+              <Card variant="outlined">
+                <Paper
+                  elevation={3}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: ".5em",
+                    padding: ".5em",
+                  }}
+                >
+                  <FormLabel>Venta Requerida Igualar Ganancia</FormLabel>
+                  <Typography className="data-point">
+                    ${ventaBreakEven.toFixed(0)} (
+                    {Math.round(pcntIncrementoVentas * 100).toFixed(0)}% más)
+                  </Typography>
+                </Paper>
+              </Card>
+              <Card variant="outlined">
+                <Paper
+                  elevation={3}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: ".5em",
+                    padding: ".5em",
+                  }}
+                >
+                  <FormLabel>Unidades Requeridas Igualar Ganancia</FormLabel>
+                  <Typography className="data-point">
+                    {unidadesBreakEven.toFixed(0)} (
+                    {Math.round(pcntIncrementoUnidades * 100).toFixed(0)}% más)
+                  </Typography>
+                </Paper>
+              </Card>
             </Card>
             <Card style={{ alignContent: "center", overflow: "scroll" }}>
               <TableContainer component={Paper} style={{ padding: 0 }}>

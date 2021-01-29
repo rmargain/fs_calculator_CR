@@ -44,6 +44,9 @@ justify-content:flex-start; */
   font-size: 16px;
   font-weight: 'bold'
 }
+.data-point{
+  font-size: 25px;
+}
 
 
 
@@ -67,5 +70,8 @@ justify-content:flex-start; */
   }
   .table-cell-text{
     font-size: .4em;
+  }
+  .data-point{
+    font-size: 1em;
   }
 }
