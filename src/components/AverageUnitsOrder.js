@@ -2,33 +2,44 @@ import {OutlinedInput, InputAdornment, FormLabel, IconButton, Card} from '@mater
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-export default function AverageUnitsOrder({label, averageUnitsOrder, setAverageUnitsOrder, setAverageUnitsMonth, averageUnitsMonth}) {
+export default function AverageUnitsOrder({label, averageUnitsOrder, setAverageUnitsOrder, setAverageUnitsMonth, averageUnitsMonth, iserror, setIserror}) {
 
     function handleChange({target: {value}}) {
         let valueToSet = parseFloat(value)
-        if(valueToSet > 1){
             setAverageUnitsOrder(valueToSet)
+        if(AverageUnitsOrder < 0){
+          setAverageUnitsOrder(1)
         }
-        if(valueToSet >= averageUnitsMonth){
-            setAverageUnitsMonth(valueToSet)
+        
+        if(valueToSet > averageUnitsMonth){
+            setIserror(true)
+        } else{
+          setIserror(false)
         }
-        console.log(valueToSet, averageUnitsMonth)
+      
     }
 
     function decrement(){
         if(averageUnitsOrder > 1){
         setAverageUnitsOrder(averageUnitsOrder-1)
         }
+        if (averageUnitsOrder - 1 > averageUnitsMonth) {
+          setIserror(true);
+        } else {
+          setIserror(false);
+        }
     }
     function increment(){
         setAverageUnitsOrder(averageUnitsOrder+1)
-        if(averageUnitsOrder >= averageUnitsMonth){
-            setAverageUnitsMonth(averageUnitsOrder + 1);
+        if (averageUnitsOrder + 1 > averageUnitsMonth) {
+          setIserror(true);
+        } else {
+          setIserror(false);
         }
     }
 
     return (
-      <div>
+      <div className="input-subcontainer">
         <Card variant="outlined" style={{ padding: "5px", margin: "10px" }}>
           <FormLabel component="legend">{label}</FormLabel>
           <div style={{ display: "flex" }}>
@@ -40,11 +51,11 @@ export default function AverageUnitsOrder({label, averageUnitsOrder, setAverageU
                 <InputAdornment position="start">U</InputAdornment>
               }
               type="number"
-              className="numberInput"
+              style={{ width: "90%" }}
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <IconButton
-                onMouseDown={increment}
+                onClick={increment}
                 style={{
                   width: "50%",
                   height: "50%",
@@ -54,7 +65,7 @@ export default function AverageUnitsOrder({label, averageUnitsOrder, setAverageU
                 <AddCircleIcon />
               </IconButton>
               <IconButton
-                onMouseDown={decrement}
+                onClick={decrement}
                 style={{
                   width: "50%",
                   height: "50%",

@@ -23,6 +23,7 @@ const CalculatorView = () => {
   const [moto, setMoto] = useState(33);
   const [auto, setAuto] = useState(33);
   const [national, setNational] = useState(34);
+  const [iserror, setIserror] = useState(false);
 
   // useEffect(() => {
   //   console.log(subscription);
@@ -54,6 +55,8 @@ const CalculatorView = () => {
           auto={auto}
           setNational={setNational}
           national={national}
+          iserror={iserror}
+          setIserror={setIserror}
         />
         <br />
         <br />

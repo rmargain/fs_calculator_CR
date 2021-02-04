@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useState} from "react";
 import { ivaAplicable, isrAplicable } from "../../utils/calculations";
 import {
   Table,
@@ -9,16 +9,13 @@ import {
   TableRow,
   Paper,
   Card,
-  Box,
   Collapse,
   IconButton,
   Typography,
-  FormLabel
+  FormLabel,
 } from "@material-ui/core";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-
-import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 export default function CurrentStoreStatus({
   subscription,
@@ -380,12 +377,16 @@ export default function CurrentStoreStatus({
       : _gananciaNetaPorUnidadEnvioGratis * 0.7 +
         _gananciaNetaPorUnidadEnvioPagado * 0.3;
 
-const ventaMensualActual = averageUnitsMonth * currentProductPrice
-const utilidadMensualActual = gananciaNetaPorUnidadActual * averageUnitsMonth
-const unidadesBreakEven = utilidadMensualActual / gananciaNetaPromedioPonderadoPorUnidad
-const ventaBreakEven = unidadesBreakEven * currentProductPrice
-const pcntIncrementoVentas = ventaBreakEven / ventaMensualActual -1
-const pcntIncrementoUnidades = unidadesBreakEven / averageUnitsMonth -1
+  const ventaMensualActual = averageUnitsMonth * currentProductPrice;
+  const utilidadMensualActual = gananciaNetaPorUnidadActual * averageUnitsMonth;
+  const unidadesBreakEven =
+    utilidadMensualActual / gananciaNetaPromedioPonderadoPorUnidad;
+  const ventaBreakEven = unidadesBreakEven * currentProductPrice;
+  const pcntIncrementoVentas = ventaBreakEven / ventaMensualActual - 1;
+  const pcntIncrementoUnidades = unidadesBreakEven / averageUnitsMonth - 1;
+
+  
+
   // table rows
   function createData(name, actual, envioGratis, envioPagado) {
     return { name, actual, envioGratis, envioPagado };
@@ -502,1419 +503,1374 @@ const pcntIncrementoUnidades = unidadesBreakEven / averageUnitsMonth -1
 
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
-
+  const nodisplay = isNaN(ventaBreakEven)
   return (
-    <div style={{ alignContent: "center", width: "100%" }}>
-      <Card variant="outlined" className="input-container">
-        <Card variant="outlined">
-          <Paper
-            elevation={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: ".5em",
-              padding: ".5em",
-            }}
-          >
-            <FormLabel>Venta Mensual Actual</FormLabel>
-            <Typography className="data-point">
-              ${ventaMensualActual.toFixed(0)}
-            </Typography>
-          </Paper>
-        </Card>
-        <Card variant="outlined">
-          <Paper
-            elevation={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: ".5em",
-              padding: ".5em",
-            }}
-          >
-            <FormLabel>Ganancia Mensual Actual</FormLabel>
-            <Typography className="data-point">
-              ${utilidadMensualActual.toFixed(0)}
-            </Typography>
-          </Paper>
-        </Card>
-        <Card variant="outlined">
-          <Paper
-            elevation={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: ".5em",
-              padding: ".5em",
-            }}
-          >
-            <FormLabel component="legend">Incremento en Precio</FormLabel>
-            <Typography className="data-point">0%</Typography>
-          </Paper>
-        </Card>
+    <div>
+      { nodisplay === true ? 
+      <div>
+      <h2>Con base en las variables e historial de ventas que ingresaste no podemos darte una recomendación.</h2> 
+      <h3> Posibles razones por las que no podemos darte una recomendación</h3>
+      <ul>
+        <li>El precio del producto ingresado es muy bajo.</li>
+        <li>La diferencia entre el precio del producto y el costo no es suficiente para cubrir las deducciones actuales.</li>
+        <li>El número de unidades mensuales actuales combinado con el precio del producto no es suficiente para cubrir el mínimo de $499 para envíos gratis en el futuro.</li>
+      </ul>
+      <h3>¿Cómo lo resuelvo? - PENSEMOS EN GRANDE Y MODELEMOS UN CASO TEÓRICO</h3>
+      <ul>
+        <li>Ajusta el costo: Asegurate de que el precio del producto y el costo de materia prima y producción esten correctos (recuerda que todo tiene que ser por unidad).</li>
+        <li>Ajusta Unidades por orden promedio: Ingresa el número de unidades equivalente a $300 (aproximadamente).</li>
+        <li>Ajusta Unidades promedio vendidas al mes: Ingresa 100 unidades (recuerda: es un caso teórico y simularemos cómo se ven esas mismas 100 unidades ofreciendo o no envíos gratis).</li>
+      </ul>
+      </div>
+      : 
+      <div style={{ alignContent: "center", width: "100%" }}>
+        <Card variant="outlined" className="input-container">
+          <Card variant="outlined">
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: ".5em",
+                padding: ".5em",
+              }}
+            >
+              <FormLabel>Venta Mensual Actual</FormLabel>
+              <Typography className="data-point">
+                ${ventaMensualActual.toFixed(0)}
+              </Typography>
+            </Paper>
+          </Card>
+          <Card variant="outlined">
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: ".5em",
+                padding: ".5em",
+              }}
+            >
+              <FormLabel>Ganancia Mensual Actual</FormLabel>
+              <Typography className="data-point">
+                ${utilidadMensualActual.toFixed(0)}
+              </Typography>
+            </Paper>
+          </Card>
+          <Card variant="outlined">
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: ".5em",
+                padding: ".5em",
+              }}
+            >
+              <FormLabel component="legend">Incremento en Precio</FormLabel>
+              <Typography className="data-point">0%</Typography>
+            </Paper>
+          </Card>
 
-        <Card variant="outlined">
-          <Paper
-            elevation={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: ".5em",
-              padding: ".5em",
-            }}
-          >
-            <FormLabel>Precio del Producto:</FormLabel>
-            <Typography className="data-point">
-              ${Math.round(currentProductPrice * 100) / 100}
-            </Typography>
-          </Paper>
-        </Card>
+          <Card variant="outlined">
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: ".5em",
+                padding: ".5em",
+              }}
+            >
+              <FormLabel>Precio del Producto:</FormLabel>
+              <Typography className="data-point">
+                ${Math.round(currentProductPrice * 100) / 100}
+              </Typography>
+            </Paper>
+          </Card>
 
-        <Card variant="outlined">
-          <Paper
-            elevation={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: ".5em",
-              padding: ".5em",
-            }}
-          >
-            <FormLabel>Venta Requerida Igualar Ganancia</FormLabel>
-            <Typography className="data-point">
-              ${ventaBreakEven.toFixed(0)} ({(Math.round(pcntIncrementoVentas*100).toFixed(0))}% más)
-            </Typography>
-          </Paper>
+          <Card variant="outlined">
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: ".5em",
+                padding: ".5em",
+              }}
+            >
+              <FormLabel>Venta Requerida Igualar Ganancia</FormLabel>
+              <Typography className="data-point">
+                ${ventaBreakEven.toFixed(0)} (
+                {Math.round(pcntIncrementoVentas * 100).toFixed(0)}% más)
+              </Typography>
+            </Paper>
+          </Card>
+          <Card variant="outlined">
+            <Paper
+              elevation={3}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: ".5em",
+                padding: ".5em",
+              }}
+            >
+              <FormLabel>Unidades Requeridas Igualar Ganancia</FormLabel>
+              <Typography className="data-point">
+                {unidadesBreakEven.toFixed(0)} (
+                {Math.round(pcntIncrementoUnidades * 100).toFixed(0)}% más)
+              </Typography>
+            </Paper>
+          </Card>
         </Card>
-        <Card variant="outlined">
-          <Paper
-            elevation={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              margin: ".5em",
-              padding: ".5em",
-            }}
-          >
-            <FormLabel>Unidades Requeridas Igualar Ganancia</FormLabel>
-            <Typography className="data-point">
-              {unidadesBreakEven.toFixed(0)} ({(Math.round(pcntIncrementoUnidades*100)).toFixed(0)}% más)
-            </Typography>
-          </Paper>
-        </Card>
-      </Card>
-      <Card style={{ alignContent: "center", overflow: "scroll" }}>
-        <TableContainer component={Paper} style={{ padding: 0 }}>
-          <Table className="table" aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  className="table-header-white"
-                  style={{
-                    backgroundColor: "white",
-                    color: "white",
-                    fontWeight: "bold",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                ></TableCell>
-                <TableCell
-                  className="table-header-white"
-                  style={{
-                    backgroundColor: "white",
-                    color: "white",
-                    fontWeight: "bold",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                ></TableCell>
-                <TableCell
-                  className="table-text"
-                  align="center"
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    fontWeight: "bold",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                >
-                  Actual
-                </TableCell>
-                <TableCell
-                  className="table-text"
-                  colSpan={2}
-                  align="center"
-                  style={{
-                    backgroundColor: "#E63976",
-                    fontWeight: "bold",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                >
-                  Simulación con Envío Gratis
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  className="table-header-white"
-                  style={{
-                    backgroundColor: "white",
-                    color: "white",
-                    fontWeight: "bold",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                    witdh: `calc(90vw * 0.05)`,
-                  }}
-                ></TableCell>
-                <TableCell
-                  className="table-text"
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    fontWeight: "bold",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                    width: `calc(90vw * 0.2)`,
-                  }}
-                >
-                  Concepto
-                </TableCell>
-                <TableCell
-                  className="table-text"
-                  align="center"
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    fontWeight: "bold",
-                    width: `calc(90vw * 0.25)`,
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                >
-                  Orden Actual
-                </TableCell>
-                <TableCell
-                  className="table-text"
-                  align="center"
-                  style={{
-                    backgroundColor: "#E63976",
-                    fontWeight: "bold",
-                    color: "white",
-                    width: `calc(90vw * 0.25)`,
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                >
-                  Orden Envío Gratis ({(porcentajeEnvioGratis * 100).toFixed(0)}
-                  %)
-                </TableCell>
-                <TableCell
-                  className="table-text"
-                  align="center"
-                  style={{
-                    backgroundColor: "#E63976",
-                    fontWeight: "bold",
-                    color: "white",
-                    width: `calc(90vw * 0.25)`,
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                >
-                  Orden Envío Pagado (
-                  {((1 - porcentajeEnvioGratis) * 100).toFixed(0)}%)
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  align="center"
-                >
-                  <IconButton
-                    aria-label="expand row"
-                    size="small"
-                    fontSize="small"
+        <Card style={{ alignContent: "center", overflow: "scroll" }}>
+          <TableContainer component={Paper} style={{ padding: 0 }}>
+            <Table className="table" aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    className="table-header-white"
+                    style={{
+                      backgroundColor: "white",
+                      color: "white",
+                      fontWeight: "bold",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  ></TableCell>
+                  <TableCell
+                    className="table-header-white"
+                    style={{
+                      backgroundColor: "white",
+                      color: "white",
+                      fontWeight: "bold",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  ></TableCell>
+                  <TableCell
+                    className="table-text"
                     align="center"
-                    onClick={() => setOpen(!open)}
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      fontWeight: "bold",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
                   >
-                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                  </IconButton>
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (=) {rows[2].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  align="right"
-                  className="table-cell-text"
-                >
-                  {rows[2].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  align="right"
-                  className="table-cell-text"
-                >
-                  {rows[2].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  align="right"
-                  className="table-cell-text"
-                >
-                  {rows[2].envioPagado}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell style={{ padding: 0 }} colSpan={5}>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <Table
-                      className="table-cell-text"
-                      aria-label="customized table"
+                    Actual
+                  </TableCell>
+                  <TableCell
+                    className="table-text"
+                    colSpan={2}
+                    align="center"
+                    style={{
+                      backgroundColor: "#E63976",
+                      fontWeight: "bold",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  >
+                    Simulación con Envío Gratis
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    className="table-header-white"
+                    style={{
+                      backgroundColor: "white",
+                      color: "white",
+                      fontWeight: "bold",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                      witdh: `calc(90vw * 0.05)`,
+                    }}
+                  ></TableCell>
+                  <TableCell
+                    className="table-text"
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      fontWeight: "bold",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                      width: `calc(90vw * 0.2)`,
+                    }}
+                  >
+                    Concepto
+                  </TableCell>
+                  <TableCell
+                    className="table-text"
+                    align="center"
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      fontWeight: "bold",
+                      width: `calc(90vw * 0.25)`,
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  >
+                    Orden Actual
+                  </TableCell>
+                  <TableCell
+                    className="table-text"
+                    align="center"
+                    style={{
+                      backgroundColor: "#E63976",
+                      fontWeight: "bold",
+                      color: "white",
+                      width: `calc(90vw * 0.25)`,
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  >
+                    Orden Envío Gratis (
+                    {(porcentajeEnvioGratis * 100).toFixed(0)}
+                    %)
+                  </TableCell>
+                  <TableCell
+                    className="table-text"
+                    align="center"
+                    style={{
+                      backgroundColor: "#E63976",
+                      fontWeight: "bold",
+                      color: "white",
+                      width: `calc(90vw * 0.25)`,
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  >
+                    Orden Envío Pagado (
+                    {((1 - porcentajeEnvioGratis) * 100).toFixed(0)}%)
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    align="center"
+                  >
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      fontSize="small"
+                      align="center"
+                      onClick={() => setOpen(!open)}
                     >
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              width: `calc(90vw * 0.1)`,
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          >
-                            {"  "}
-                          </TableCell>
-                          <TableCell
-                            className="table-cell-text"
-                            style={{
-                              width: `calc(90vw * 0.16)`,
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          >
-                            (+) {rows[0].name}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              width: `calc(90vw * 0.24667)`,
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            align="right"
-                            className="table-cell-text"
-                          >
-                            {rows[0].actual}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              width: `calc(90vw * 0.24667)`,
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            align="right"
-                            className="table-cell-text"
-                          >
-                            {rows[0].envioGratis}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              width: `calc(90vw * 0.24667)`,
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            align="right"
-                            className="table-cell-text"
-                          >
-                            {rows[0].envioPagado}
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          ></TableCell>
-                          <TableCell
-                            className="table-cell-text"
-                            style={{
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                          >
-                            (X) {rows[1].name}
-                          </TableCell>
-                          <TableCell
-                            className="table-cell-text"
-                            style={{
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            align="right"
-                          >
-                            {rows[1].actual}
-                          </TableCell>
-                          <TableCell
-                            className="table-cell-text"
-                            style={{
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            align="right"
-                          >
-                            {rows[1].envioGratis}
-                          </TableCell>
-                          <TableCell
-                            className="table-cell-text"
-                            style={{
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            align="right"
-                          >
-                            {rows[1].envioPagado}
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                    </Table>
-                  </Collapse>
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (+) {rows[3].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[3].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[3].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    width: "25%",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[3].envioPagado}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (=) {rows[4].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[4].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[4].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[4].envioPagado}
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="center"
-                >
-                  <IconButton
-                    aria-label="expand row"
-                    size="small"
-                    fontSize="small"
-                    align="center"
-                    onClick={() => setOpen1(!open1)}
+                      {open ? (
+                        <KeyboardArrowUpIcon />
+                      ) : (
+                        <KeyboardArrowDownIcon />
+                      )}
+                    </IconButton>
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
                   >
-                    {open1 ? (
-                      <KeyboardArrowUpIcon />
-                    ) : (
-                      <KeyboardArrowDownIcon />
-                    )}
-                  </IconButton>
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (-) {rows[15].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[15].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[15].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[15].envioPagado}
-                </TableCell>
-              </TableRow>
+                    (=) {rows[2].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
 
-              <TableRow>
-                <TableCell style={{ padding: 0 }} colSpan={5}>
-                  <Collapse in={open1} timeout="auto" unmountOnExit>
-                    <Table className="table-text" aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                              width: `calc(90vw * 0.1)`,
-                            }}
-                            className="table-cell-text"
-                          ></TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                              width: `calc(90vw * 0.16)`,
-                            }}
-                            className="table-cell-text"
-                          >
-                            (-) {rows[5].name}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                              width: `calc(90vw * 0.24667)`,
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[5].actual}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                              width: `calc(90vw * 0.24667)`,
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[5].envioGratis}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                              width: `calc(90vw * 0.24667)`,
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[5].envioPagado}
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          ></TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          >
-                            (-) {rows[6].name}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[6].actual}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[6].envioGratis}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[6].envioPagado}
-                          </TableCell>
-                        </TableRow>
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    align="right"
+                    className="table-cell-text"
+                  >
+                    {rows[2].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
 
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          ></TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          >
-                            (-) {rows[8].name}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[8].actual}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[8].envioGratis}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[8].envioPagado}
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          ></TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                          >
-                            (-) {rows[9].name}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[9].actual}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[9].envioGratis}
-                          </TableCell>
-                          <TableCell
-                            style={{
-                              backgroundColor: "white",
-                              paddingRight: ".4vw",
-                              paddingLeft: ".5vw",
-                              paddingTop: ".1vw",
-                              paddingBottom: ".1vw",
-                            }}
-                            className="table-cell-text"
-                            align="right"
-                          >
-                            {rows[9].envioPagado}
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                    </Table>
-                  </Collapse>
-                </TableCell>
-              </TableRow>
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    align="right"
+                    className="table-cell-text"
+                  >
+                    {rows[2].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
 
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (-) {rows[7].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[7].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[7].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[7].envioPagado}
-                </TableCell>
-              </TableRow>
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    align="right"
+                    className="table-cell-text"
+                  >
+                    {rows[2].envioPagado}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell style={{ padding: 0 }} colSpan={5}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                      <Table
+                        className="table-cell-text"
+                        aria-label="customized table"
+                      >
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                width: `calc(90vw * 0.1)`,
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            >
+                              {"  "}
+                            </TableCell>
+                            <TableCell
+                              className="table-cell-text"
+                              style={{
+                                width: `calc(90vw * 0.16)`,
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            >
+                              (+) {rows[0].name}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                width: `calc(90vw * 0.24667)`,
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              align="right"
+                              className="table-cell-text"
+                            >
+                              {rows[0].actual}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                width: `calc(90vw * 0.24667)`,
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              align="right"
+                              className="table-cell-text"
+                            >
+                              {rows[0].envioGratis}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                width: `calc(90vw * 0.24667)`,
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              align="right"
+                              className="table-cell-text"
+                            >
+                              {rows[0].envioPagado}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            ></TableCell>
+                            <TableCell
+                              className="table-cell-text"
+                              style={{
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                            >
+                              (X) {rows[1].name}
+                            </TableCell>
+                            <TableCell
+                              className="table-cell-text"
+                              style={{
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              align="right"
+                            >
+                              {rows[1].actual}
+                            </TableCell>
+                            <TableCell
+                              className="table-cell-text"
+                              style={{
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              align="right"
+                            >
+                              {rows[1].envioGratis}
+                            </TableCell>
+                            <TableCell
+                              className="table-cell-text"
+                              style={{
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              align="right"
+                            >
+                              {rows[1].envioPagado}
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                      </Table>
+                    </Collapse>
+                  </TableCell>
+                </TableRow>
 
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (=) {rows[10].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[10].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[10].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#BEBEBE",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[10].envioPagado}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (-) {rows[11].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[11].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[11].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "#EBEBEB",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[11].envioPagado}
-                </TableCell>
-              </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (+) {rows[3].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[3].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[3].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      width: "25%",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[3].envioPagado}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (=) {rows[4].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[4].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[4].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[4].envioPagado}
+                  </TableCell>
+                </TableRow>
 
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (=) {rows[12].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[12].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[12].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[12].envioPagado}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (=) {rows[13].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[13].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[13].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[13].envioPagado}
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                ></TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                >
-                  (=) {rows[14].name}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[14].actual}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[14].envioGratis}
-                </TableCell>
-                <TableCell
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    paddingRight: ".4vw",
-                    paddingLeft: ".5vw",
-                    paddingTop: ".1vw",
-                    paddingBottom: ".1vw",
-                  }}
-                  className="table-cell-text"
-                  align="right"
-                >
-                  {rows[14].envioPagado}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="center"
+                  >
+                    <IconButton
+                      aria-label="expand row"
+                      size="small"
+                      fontSize="small"
+                      align="center"
+                      onClick={() => setOpen1(!open1)}
+                    >
+                      {open1 ? (
+                        <KeyboardArrowUpIcon />
+                      ) : (
+                        <KeyboardArrowDownIcon />
+                      )}
+                    </IconButton>
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (-) {rows[15].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[15].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[15].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[15].envioPagado}
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell style={{ padding: 0 }} colSpan={5}>
+                    <Collapse in={open1} timeout="auto" unmountOnExit>
+                      <Table
+                        className="table-text"
+                        aria-label="customized table"
+                      >
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                                width: `calc(90vw * 0.1)`,
+                              }}
+                              className="table-cell-text"
+                            ></TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                                width: `calc(90vw * 0.16)`,
+                              }}
+                              className="table-cell-text"
+                            >
+                              (-) {rows[5].name}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                                width: `calc(90vw * 0.24667)`,
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[5].actual}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                                width: `calc(90vw * 0.24667)`,
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[5].envioGratis}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                                width: `calc(90vw * 0.24667)`,
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[5].envioPagado}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            ></TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            >
+                              (-) {rows[6].name}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[6].actual}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[6].envioGratis}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[6].envioPagado}
+                            </TableCell>
+                          </TableRow>
+
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            ></TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            >
+                              (-) {rows[8].name}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[8].actual}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[8].envioGratis}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[8].envioPagado}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            ></TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                            >
+                              (-) {rows[9].name}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[9].actual}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[9].envioGratis}
+                            </TableCell>
+                            <TableCell
+                              style={{
+                                backgroundColor: "white",
+                                paddingRight: ".4vw",
+                                paddingLeft: ".5vw",
+                                paddingTop: ".1vw",
+                                paddingBottom: ".1vw",
+                              }}
+                              className="table-cell-text"
+                              align="right"
+                            >
+                              {rows[9].envioPagado}
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                      </Table>
+                    </Collapse>
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (-) {rows[7].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[7].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[7].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[7].envioPagado}
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (=) {rows[10].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[10].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[10].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#BEBEBE",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[10].envioPagado}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (-) {rows[11].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[11].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[11].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "#EBEBEB",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[11].envioPagado}
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (=) {rows[12].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[12].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[12].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[12].envioPagado}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (=) {rows[13].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[13].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[13].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[13].envioPagado}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  ></TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                  >
+                    (=) {rows[14].name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[14].actual}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[14].envioGratis}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      paddingRight: ".4vw",
+                      paddingLeft: ".5vw",
+                      paddingTop: ".1vw",
+                      paddingBottom: ".1vw",
+                    }}
+                    className="table-cell-text"
+                    align="right"
+                  >
+                    {rows[14].envioPagado}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      </div>
+      }
     </div>
   );
-
-  // return (
-  //     <div>
-  //        <div>Unidades: {averageUnitsOrder}</div>
-  //        <div>Precio: {currentProductPrice}</div>
-  //        <div>Venta: {venta}</div>
-  //        <div>Envío: {envio}</div>
-  //        <div>Venta Total: {ventaTotal}</div>
-  //        <div>Comision CR: {comisionCR}</div>
-  //        <div>Pagos: {pagos}</div>
-  //        <div>Costo Envío Gratis: {costoEnvioGratisActual}</div>
-  //        <div>Iva: {ivaActual}</div>
-  //        <div>ISR: {isrActual}</div>
-  //        <div>Percepción por Venta: {percepcionActual}</div>
-  //        <div>Costo del Producto: {costoTotalActual}</div>
-  //        <div>Ganancia Neta: {gananciaNetaActual}</div>
-  //        <div>Ganancia Neta por Unidad: {gananciaNetaPorUnidadActual}</div>
-  //        <br/>
-  //        <br/>
-  //        <br/>
-  //        <div>Unidades: {unidadesEnvioGratisPorOrden}</div>
-  //        <div>Precio: {currentProductPrice}</div>
-  //        <div>Venta: {ventaTotalEnvioGratis}</div>
-  //        <div>Envío: {envioPagadoPorCliente}</div>
-  //        <div>Venta Total: {ventaTotalEnvioGratis}</div>
-  //        <div>Comision CR: {comisionCREnvioGratis}</div>
-  //        <div>Pagos: {pagosEnvioGratis}</div>
-  //        <div>Costo Envío Gratis: {costoEnvioGratis}</div>
-  //        <div>Iva: {ivaEnvioGratis}</div>
-  //        <div>ISR: {isrEnvioGratis}</div>
-  //        <div>Percepción por Venta: {percepcionEnvioGratis}</div>
-  //        <div>Costo del Producto: {costoTotalEnvioGratis}</div>
-  //        <div>Ganancia Neta: {gananciaNetaEnvioGratis}</div>
-  //        <div>Ganancia Neta por Unidad: {gananciaNetaPorUnidadEnvioGratis}</div>
-  //        <br/>
-  //        <br/>
-  //        <br/>
-  //        <div>Unidades: {_unidadesEnvioGratisPorOrden}</div>
-  //        <div>Precio: {price}</div>
-  //        <div>Venta: {_ventaTotalEnvioGratis}</div>
-  //        <div>Envío: {_envioPagadoPorCliente}</div>
-  //        <div>Venta Total: {_ventaTotalEnvioGratis}</div>
-  //        <div>Comision CR: {_comisionCREnvioGratis}</div>
-  //        <div>Pagos: {_pagosEnvioGratis}</div>
-  //        <div>Costo Envío Gratis: {_costoEnvioGratis}</div>
-  //        <div>Iva: {_ivaEnvioGratis}</div>
-  //        <div>ISR: {_isrEnvioGratis}</div>
-  //        <div>Percepción por Venta: {_percepcionEnvioGratis}</div>
-  //        <div>Costo del Producto: {_costoTotalEnvioGratis}</div>
-  //        <div>Ganancia Neta: {_gananciaNetaEnvioGratis}</div>
-  //        <div>Ganancia Neta por Unidad: {_gananciaNetaPorUnidadEnvioGratis}</div>
-  //        <div>{_gananciaNetaPorUnidadEnvioGratis}</div>
-  //        <br/>
-  //        <br/>
-  //        <br/>
-  //        <div>Unidades: {_unidadesEnvioPagadoPorOrden}</div>
-  //        <div>Precio: {price}</div>
-  //        <div>Venta: {_ventaTotalEnvioPagado}</div>
-  //        <div>Envío: {_envioPagadoPorCliente2}</div>
-  //        <div>Venta Total: {_ventaTotalEnvioPagado}</div>
-  //        <div>Comision CR: {_comisionCREnvioPagado}</div>
-  //        <div>Pagos: {_pagosEnvioPagado}</div>
-  //        <div>Costo Envío Gratis: {_costoEnvioGratis2}</div>
-  //        <div>Iva: {_ivaEnvioPagado}</div>
-  //        <div>ISR: {_isrEnvioPagado}</div>
-  //        <div>Percepción por Venta: {_percepcionEnvioPagado}</div>
-  //        <div>Costo del Producto: {_costoTotalEnvioPagado}</div>
-  //        <div>Ganancia Neta: {_gananciaNetaEnvioPagado}</div>
-  //        <div>Ganancia Neta por Unidad: {_gananciaNetaPorUnidadEnvioPagado}</div>
-  //        <div>{_gananciaNetaPorUnidadEnvioPagado}</div>
-
-  //        <div>{optimizedPrice(gananciaNetaPorUnidadActual, min, averageUnitsMonth, averageUnitsOrder)}</div>
-
-  // </div>
-  // )
 }

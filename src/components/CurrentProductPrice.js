@@ -17,28 +17,52 @@ export default function CurrProductPrice({setCurrentProductPrice, currentProduct
         setCurrentProductPrice(currentProductPrice+1)
     }
     return (
-        <div>
-         <Card variant="outlined" style={{padding:"5px", margin: "10px"}}>
-            <FormLabel component="legend">Precio actual del producto</FormLabel>
-            <div style={{display:"flex"}}>
+      <div className="input-subcontainer">
+        <Card variant="outlined" style={{ padding: "5px", margin: "10px" }}>
+          <FormLabel component="legend">Precio actual del producto</FormLabel>
+          <div style={{ display: "flex" }}>
             <OutlinedInput
-            id="outlined-adornment"
-            value={currentProductPrice}
-            onChange={handleChange}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            type="number"
-            className="numberInput"
-          /> 
-          <div style={{display: "flex", flexDirection: "column", margin: 0, padding: 0, size: "15%"}}>
-          <IconButton onClick={increment} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
-                <AddCircleIcon/>
-            </IconButton>
-            <IconButton onClick={decrement} style={{width: "50%", height: "50%", padding: "5px 0 5px 10px"}}>
-                <RemoveCircleIcon/>
-            </IconButton>      
-          </div>
+              id="outlined-adornment"
+              value={currentProductPrice}
+              onChange={handleChange}
+              startAdornment={
+                <InputAdornment position="start">$</InputAdornment>
+              }
+              type="number"
+              style={{ width: "90%" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                margin: 0,
+                padding: 0,
+                size: "15%",
+              }}
+            >
+              <IconButton
+                onClick={increment}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  padding: "5px 0 5px 10px",
+                }}
+              >
+                <AddCircleIcon />
+              </IconButton>
+              <IconButton
+                onClick={decrement}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  padding: "5px 0 5px 10px",
+                }}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
             </div>
-            </Card>
-        </div>
-    )
+          </div>
+        </Card>
+      </div>
+    );
 }

@@ -3,7 +3,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -120,6 +119,45 @@ const Instructions = () => {
               beneficiada. En este caso recomendamos a la tienda reconsiderar el
               precio de sus productos a la baja para incrementar la demanda.
             </p>
+            <h4 style={{ color: "#E63976" }}>
+              Casos en que la calculadora no puede dar una recomendación
+            </h4>
+            <h4>
+              {" "}
+              Posibles razones por las que no podemos darte una recomendación
+            </h4>
+            <ul>
+              <li>El precio del producto ingresado es muy bajo.</li>
+              <li>
+                La diferencia entre el precio del producto y el costo no es
+                suficiente para cubrir las deducciones actuales.
+              </li>
+              <li>
+                El número de unidades mensuales actuales combinado con el precio
+                del producto no es suficiente para cubrir el mínimo de $499 para
+                envíos gratis en el futuro.
+              </li>
+            </ul>
+            <h4>
+              ¿Cómo lo resuelvo? - PENSEMOS EN GRANDE Y MODELEMOS UN CASO
+              TEÓRICO
+            </h4>
+            <ul>
+              <li>
+                Ajusta el costo: Asegurate de que el precio del producto y el
+                costo de materia prima y producción esten correctos (recuerda
+                que todo tiene que ser por unidad).
+              </li>
+              <li>
+                Ajusta Unidades por orden promedio: Ingresa el número de
+                unidades equivalente a $300 (aproximadamente).
+              </li>
+              <li>
+                Ajusta Unidades promedio vendidas al mes: Ingresa 100 unidades
+                (recuerda: es un caso teórico y simularemos cómo se ven esas
+                mismas 100 unidades ofreciendo o no envíos gratis).
+              </li>
+            </ul>
           </AccordionDetails>
         </Accordion>
 

@@ -20,6 +20,7 @@ export default function Navbar(props, params) {
             className="logo"
             src="https://canastarosa.com/scripts/components/Header2020/images/logo_horizontal.svg"
             alt="Logo Canasta Rosa"
+            style={{width:'20em'}}
           />
 
           <div>
