@@ -60,7 +60,7 @@ const CalculatorView = () => {
         />
         <br />
         <br />
-        <h1>Paso 2: Evalua los Escenarios</h1>
+        <h1>Paso 2: Evalúa los Escenarios</h1>
 
         <Accordion>
           <AccordionSummary
