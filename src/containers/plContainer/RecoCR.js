@@ -522,7 +522,7 @@ const pcntIncrementoUnidades = unidadesBreakEven / averageUnitsMonth - 1;
       </ul>
       <h3>¿Cómo lo resuelvo? - PENSEMOS EN GRANDE Y MODELEMOS UN CASO TEÓRICO</h3>
       <ul>
-        <li>Ajusta el costo: Asegurate de que el precio del producto y el costo de materia prima y producción esten correctos (recuerda que todo tiene que ser por unidad).</li>
+        <li>Ajusta el costo: Asegurate de que el precio del producto y el costo de materia prima y producción estén correctos (recuerda que todo tiene que ser por unidad).</li>
         <li>Ajusta Unidades por orden promedio: Ingresa el número de unidades equivalente a $300 (aproximadamente).</li>
         <li>Ajusta Unidades promedio vendidas al mes: Ingresa 100 unidades (recuerda: es un caso teórico y simularemos cómo se ven esas mismas 100 unidades ofreciendo o no envíos gratis).</li>
       </ul>

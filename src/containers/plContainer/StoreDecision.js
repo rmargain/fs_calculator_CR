@@ -560,7 +560,7 @@ export default function StoreDecision({
         <ul>
           <li>
             Ajusta el costo: Asegurate de que el precio del producto y el costo
-            de materia prima y producción esten correctos (recuerda que todo
+            de materia prima y producción estén correctos (recuerda que todo
             tiene que ser por unidad).
           </li>
           <li>
